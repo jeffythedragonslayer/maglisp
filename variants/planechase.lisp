@@ -1,0 +1,1 @@
+(defparameter *chaos-symbol* 'CHAOS)
