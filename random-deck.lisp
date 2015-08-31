@@ -1,5 +1,3 @@
-(load "card.lisp")
-
 (defparameter *accursed-spirit* (make-instance 'creature
 					       :name "Accursed Spirit"
 					       :cmc  4

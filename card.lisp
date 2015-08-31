@@ -1,4 +1,3 @@
-(load "creature.lisp")
 (load "event.lisp")
 (load "land.lisp")
 (load "planeswalker.lisp")
@@ -8,8 +7,7 @@
 (load "turn-structure.lisp")
 (load "zones.lisp")
 (load "shared-team-turns.lisp")
-(load "price-of-glory.lisp")
-(load "infernal-intervention.lisp")
+(load "build-deck.lisp")
 
 (defparameter *colors*                     '(white blue black red green))
 (defparameter *mana-symbols*               '(W     U    B     R   G))
@@ -95,8 +93,9 @@
 ;        (loyalty)) 
 
 (defclass player ()
-  ((name)
+  ((name :initarg :name)
    (life :initarg :life :initform 20)
+   (library :initform (make-instance 'library))
    (hand :initform (make-instance 'hand))))
 
 ;(defclass team ()
@@ -220,3 +219,6 @@
 ;(defun get-timestamp)
 (defun pass-priority ())
 ;(defun devotion (player type))
+
+(load "price-of-glory.lisp")
+(load "infernal-intervention.lisp")
