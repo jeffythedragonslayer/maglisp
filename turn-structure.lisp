@@ -30,6 +30,12 @@
         ;(play-land))
         nil)
 
+    (defun beginning-of-combat-step ())
+    (defun declare-attackers-step ())
+    (defun declare-blockers-step ())
+    (defun combat-damage-step ())
+    (defun end-of-combat-step ())
+
 (defun combat-phase ()
   (print "Combat Phase")
   (beginning-of-combat-step)
@@ -37,13 +43,6 @@
   (declare-blockers-step)
   (combat-damage-step)
   (end-of-combat-step))
-
-
-        (defun beginning-of-combat-step ())
-        (defun delare-attackers-step ())
-        (defun declare-blockers-step ())
-        (defun combat-damage-step ())
-        (defun end-of-combat-step ())
 
 (defun end-step ()
 	(print "End Step"))

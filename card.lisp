@@ -8,6 +8,8 @@
 (load "turn-structure.lisp")
 (load "zones.lisp")
 (load "shared-team-turns.lisp")
+(load "price-of-glory.lisp")
+(load "infernal-intervention.lisp")
 
 (defparameter *colors*                     '(white blue black red green))
 (defparameter *mana-symbols*               '(W     U    B     R   G))
@@ -34,6 +36,7 @@
 	 (flavor    :initarg :flavor)
 	 (text      :initarg :text)
 	 (abilities :initarg :abilities)
+	 (triggered-abilities :initarg :triggered-abilities)
 	 (colors    :initarg :colors)))
 
 (defclass copy-of-card (mtg-object) ())
@@ -45,11 +48,14 @@
 
 (defclass snow () ())
 (defclass creature (card permanent)
-        ((power     :initarg :power)
-         (toughness :initarg :toughness)
-	 (subtype   :initarg :subtype)
-	 (sick      :initform t)
-	 (damage    :initform 0)))
+        ((power               :initarg :power)
+         (toughness           :initarg :toughness)
+	 (subtype             :initarg :subtype)
+	 (activated-abilities :initarg :activated-abilities)
+	 (tap-abilities       :initarg :tap-abilities)
+	 (static-abilities    :initarg :static-abilities)
+	 (sick                :initform t)
+	 (damage              :initform 0)))
 
 (defun print-card (card)
   (format t "Name:      ~a~%" (slot-value card 'name))
@@ -63,7 +69,8 @@
         ((attach-target :initarg :attach-target)
          (timestamp     :initarg :timestamp)))
 
-(defclass artifact (permanent) ())
+(defclass artifact (card permanent) ())
+
         (defclass equipment (artifact attachable) ())
         (defclass fortification (artifact attachable) ())
 	(defclass contraption (artifact) ())
@@ -79,7 +86,7 @@
         (defclass shrine (spell) ())
         (defclass world (enchantment) ())
 (defclass aura (enchantment attachable) ())
-(defclass token () ())
+(defclass token (mtg-object) ())
 (defclass legend () ())
 (defclass enchantment-artifact (enchantment artifact) ())
 (defclass enchantment-creature (enchantment creature) ())

@@ -1,0 +1,33 @@
+mtg-object
+	ability on the stack
+	card
+	copy of a card
+	token
+	spell
+	permanent
+	emblem
+
+A spell is...
+	card on the stack
+	copy of a spell
+
+an ability is...
+	spell ability
+	activated ability
+	triggered ability
+	static ability
+
+A permanent is..
+	any card or token on the battlefield
+	typically at least one of:
+		Artifact
+		Creature
+		Enchantment
+		Land
+		Planeswalker
+
+A token is...
+	A permanent that is not represented by a regular card with a casting cost
+
+Card is...
+	a physical Magic card
