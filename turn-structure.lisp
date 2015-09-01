@@ -62,8 +62,8 @@
 	(main-phase 2)
 	(ending-phase))
 
-(defparameter *player1* (make-instance 'player))
-(defparameter *player2* (make-instance 'player))
+(defparameter *player1* (make-instance 'player :name "Bob"))
+(defparameter *player2* (make-instance 'player :name "Alice"))
 
 (defun main ()
         (turn))

@@ -1,21 +1,26 @@
 (defclass zone ()
-        ((cards :initform nil)))
+        ((objs :initform nil)))
 
-(defclass library     (zone) ())
-(defclass hand        (zone) ()) 
-(defclass graveyard   (zone) ()) 
-(defclass battlefield (zone) ()) 
-(defclass stack       (zone) ()) 
-(defclass exile       (zone) ()) 
-(defclass command     (zone) ())
-(defclass ante        (zone) ()) 
-(defclass sideboard   (zone) ())
+(defclass public-zone   (zone) ()) ; 400.2
+(defclass hidden-zone   (zone) ()) ; 400.2
+(defclass personal-zone (zone) ()) ; 400.1
 
+(defclass library     (hidden-zone personal-zone) ())
+(defclass hand        (hidden-zone personal-zone) ()) 
+(defclass graveyard   (public-zone personal-zone) ()) 
+(defclass battlefield (public-zone) ()) 
+(defclass stack       (public-zone) ()) 
+(defclass exile       (public-zone) ()) 
+(defclass command     (public-zone) ())
+(defclass ante        (public-zone) ()) 
+
+(defclass sideboard ()
+  	((objs :initform nil)))
 
 (defparameter *mtg-stack*       (make-instance 'stack))
-(defparameter *mtg-battlefield* (make-instance 'stack))
-(defparameter *mtg-graveyard*   (make-instance 'stack))
-(defparameter *mtg-exile*       (make-instance 'stack))
-(defparameter *mtg-command*     (make-instance 'stack))
-(defparameter *mtg-ante*        (make-instance 'stack))
-(defparameter *mtg-sideboard*   (make-instance 'stack))
+(defparameter *mtg-battlefield* (make-instance 'battlefield))
+(defparameter *mtg-graveyard*   (make-instance 'graveyard))
+(defparameter *mtg-exile*       (make-instance 'exile))
+(defparameter *mtg-command*     (make-instance 'command))
+(defparameter *mtg-ante*        (make-instance 'ante))
+(defparameter *mtg-sideboard*   (make-instance 'sideboard))
