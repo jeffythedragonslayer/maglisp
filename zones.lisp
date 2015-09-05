@@ -1,5 +1,5 @@
 (defclass zone ()
-        ((objs :initform nil)))
+        ((objs :initform nil :accessor objs)))
 
 (defclass public-zone   (zone) ()) ; 400.2
 (defclass hidden-zone   (zone) ()) ; 400.2
@@ -15,7 +15,7 @@
 (defclass ante        (public-zone) ()) 
 
 (defclass sideboard ()
-  	((objs :initform nil)))
+  	((objs :initform nil :accessor objs)))
 
 (defparameter *mtg-stack*       (make-instance 'stack))
 (defparameter *mtg-battlefield* (make-instance 'battlefield))

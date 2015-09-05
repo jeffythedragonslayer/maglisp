@@ -1,5 +1,7 @@
 *.FASL
 *.fasl
+*.fas
+*.lib
 *.lisp-temp
 nohup.out
 *~

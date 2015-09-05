@@ -1,10 +1,16 @@
 (defclass land     (card) ())
-        (defclass island   (land) ())
-        (defclass swamp    (land) ())
-        (defclass forest   (land) ())
-        (defclass plains   (land) ())
-        (defclass mountain (land) ())
+        (defclass island   (land) ((name :initform "Island")))
+        (defclass swamp    (land) ((name :initform "Swamp")))
+        (defclass forest   (land) ((name :initform "Forest")))
+        (defclass plains   (land) ((name :initform "Plains")))
+        (defclass mountain (land) ((name :initform "Mountain")))
         (defclass nonbasic-land (land) ())
+
+(defparameter +island+   (make-instance 'island   :name "Island"))
+(defparameter +swamp+    (make-instance 'swamp    :name "Swamp"))
+(defparameter +forest+   (make-instance 'forest   :name "Forest"))
+(defparameter +plains+   (make-instance 'plains   :name "Plains"))
+(defparameter +mountain+ (make-instance 'mountain :name "Mountain"))
 
 (defclass desert      (land) ())
 (defclass gate        (land) ())
@@ -14,3 +20,6 @@
 (defclass mine        (land) ())
 (defclass power-plant (land) ())
 (defclass tower       (land) ())
+
+(defmethod print-object ((obj land) stream)
+        (format stream "Name: ~a~%" (name obj)))

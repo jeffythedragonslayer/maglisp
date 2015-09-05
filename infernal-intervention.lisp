@@ -163,8 +163,8 @@
 					  :text "Enchanted creature gets -2/-2.  At the beginning of the upkeep of enchanted creature's controller, that player loses 2 life."))
 
 
-(defparameter *infernal-intervention* '((13 *mountain*)
-					(13 *swamp*) 
+(defparameter *infernal-intervention* '((13 +mountain+)
+					(13 +swamp+)
 					(3  *typhoid-Rats*) 
 					(2  *carrion-Crow*)
 					(2  *gargoyle-sentinel*)
