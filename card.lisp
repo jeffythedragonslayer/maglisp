@@ -1,18 +1,7 @@
 (load "zones.lisp")
 
-(defparameter *colors*                     '(white blue black red green))
-(defparameter *mana-symbols*               '(W     U    B             R   G))
-(defparameter *hybrid-symbols*             '(W/U W/B U/B U/R B/R B/G R/G R/W G/W G/U))
-(defparameter *phyrexian-mana-symbols*     '(W/P U/P B/P R/P G/P))
-(defparameter *monocolored-hybrid-symbols* '(2/W 2/U 2/B 2/R 2/G))
 (defparameter *tap-symbol*                 'T)
 (defparameter *untap-symbol*               'Q)
-(defparameter *planeswalker-symbol*        'PW)
-(defparameter *snow-symbol*                'S)
-(defparameter *game-over*                  nil)
-
-(defparameter *mana-types* '(white blue black red green colorless))
-(defparameter *mana-burn*  'false)
 
 (defclass mtg-object   ()
         ((owner      :initarg :owner      :accessor owner)
@@ -37,25 +26,6 @@
          (facedown :initarg :facedown :initform nil :accessor facedown)))
 
 (defclass snow () ())
-(defclass creature (card permanent)
-        ((power               :initarg :power               :accessor power)
-         (toughness           :initarg :toughness           :accessor toughness)
-         (subtype             :initarg :subtype             :accessor subtype)
-         (activated-abilities :initarg :activated-abilities :accessor activated-abilities)
-         (tap-abilities       :initarg :tap-abilities       :accessor tap-abilities)
-         (static-abilities    :initarg :static-abilities    :accessor static-abilities)
-         (sick                :initform t                   :accessor sick)
-         (damage              :initform 0                   :accessor damage)))
-
-(defmethod print-object ((obj creature) stream)
-        (format stream "Name:    ~a~%"      (name    obj))
-        (format stream "Subtype: ~a~%"      (subtype obj))
-        (format stream "CMC:     ~a drop~%" (cmc     obj))
-        (format stream "P/T:     ~a/~a~%"   (power   obj) (toughness obj))
-        (format stream "Flavor:  ~a~%"      (flavor  obj)))
-
-(defun print-deck (deck)
-  (mapcar #'print deck))
 
 (defclass attachable (mtg-object)
         ((attach-target :initarg :attach-target :accessor attach-target)
@@ -82,82 +52,15 @@
 (defclass enchantment-artifact (enchantment artifact) ())
 (defclass enchantment-creature (enchantment creature) ())
 (defclass artifact-enchantment-creature (artifact-enchantment creature) ())
-(defclass planeswalker (card) ())
-;        (loyalty)) 
-
-(defclass player ()
-  ((name    :initarg :name                  :accessor name)
-   (life    :initarg :life :initform 20     :accessor life)
-   (library :initarg :library               :accessor library)
-   (hand    :initform (make-instance 'hand) :accessor hand)))
-
-;(defclass team ()
-;        (name)
-;        (teammates))
 
 (defclass emblem (mtg-object) ())
 
-(defclass ability           (mtg-object) ())
-(defclass triggered-ability (ability) ())
-(defclass activated-ability (ability) ())
-(defclass loyalty-ability   (activated-ability) ())
-(defclass mana-ability      (activated-ability) ())
-(defclass static-ability    (ability) ())
-(defclass keyword-ability   (ability) ())
-(defclass evasion-ability   (ability) ())
-
-(defclass counter () ())
-
-(defclass effect               ()       ())
-(defclass one-shot-effect      (effect) ())
-(defclass text-changing-effect (effect) ())
-(defclass continuous-effect    (effect) ())
-(defclass replacement-effect   (continuous-effect) ())
-(defclass prevention-effect    (continous-effect) ())
-
-(defclass action () ())
-(defclass keyword-actions (action) ())
-(defclass special-action (action) ())
-(defclass state-based-action (action) ())
-(defclass turn-based-action (action) ())
-
 (defun get-controller () nil)
 (defun get-owner      () nil)
-(defun push-stack     () nil)
-(defun resolve-stack  () nil)
-(defun stack-empty    () nil)
 
-;(defun scry (player num)
-;  nil)
+(defun converted-mana-cost (mtg-obj))
+(defgeneric damage (perm))
 
-(defun win-game (player)
-  (format t "Game Over ")
-  (format t "~a~%" (name player)))
-
-(defun lose-game (player)
-        (setf *game-over* t)
-        (format t "Game Over ")
-        (format t "~a~%" (name player)))
-
-;(defun gain-life (player num) nil)
-
-;(defun lose-life (player num) nil)
-;(defun set-life  (player num) nil)
-;(defun gain-poison (player num) nil)
-;(defun lose-poison (player num) nil)
-;
-;(defun exile (perm))
-;(defun destroy (perm))
-
-;(defun converted-mana-cost (mtg-obj))
-;(defun mulligan (player))
-;(defgeneric damage ())
-
-;(defun get-active-player ())
-;(defun is-teammate (player1 player2))
-;(defun is-opponent (player1 player2))
-(defun get-apnap ()) 
-;(defun shuffle (player))
 (defun tap (perm)
         (setf (tapped perm) t))
 
@@ -175,49 +78,12 @@
         (setf (timestamp     source) (get-universal-time)))
 
 (defun detach (source)
-  (setf (attach-target source) nil)
-  (setf (timestamp     source) nil))
+        (setf (attach-target source) nil)
+        (setf (timestamp     source) nil))
 
-(defun sacrifice ())
 (defun proliferate ())
-(defun flicker ())
-(defun bounce ()) 
 
-(defun set-damage (creature dmg)
-        (setf (damage creature) dmg))
+(defun is-vanilla (card))
+(defun get-timestamp () 'nil)
+(defun devotion (player type))
 
-(defun do-damage (creature dmg)
-        (setf (damage creature) (- (damage creature) dmg)))
-
-(defun heal (creature)
-        (setf (damage creature) 0))
-
-(defun hp (creature)
-        (- (toughness creature) (damage creature)))
-  
-(defun floating ())
-;(defun mill (player num))
-
-(defun concede (player)
-        (lose-game player))
-
-;(defun tapped-out (player))
-;(defun hand-size (player))
-;(defun graveyard-size (player))
-;(defun is-vanilla (card))
-;(defun get-timestamp)
-(defun pass-priority ())
-;(defun devotion (player type))
-
-(load "event.lisp")
-(load "land.lisp")
-(load "planeswalker.lisp")
-(load "grand-melee.lisp")
-(load "free-for-all.lisp")
-(load "state-based-actions.lisp")
-(load "shared-team-turns.lisp")
-(load "build-deck.lisp")
-(load "infernal-intervention.lisp")
-(load "price-of-glory.lisp") 
-(load "turn-structure.lisp")
-(load "util.lisp")

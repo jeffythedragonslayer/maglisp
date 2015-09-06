@@ -1,3 +1,5 @@
+(defclass counter () ())
+
 (defparameter *counter-types* '(+0/+1 +0/+2 +1/+0 +1/+1 +1/+2 +2/+0 +2/+2 -0/-1 -0/-2 -1/-0 -1/-1 -2/-1 -2/-2
                                 Age Aim Arrow Arrowhead Awakening
                                 Blaze Blood Bounty Bribery

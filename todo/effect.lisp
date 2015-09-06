@@ -1,0 +1,6 @@
+(defclass effect               ()       ())
+(defclass one-shot-effect      (effect) ())
+(defclass text-changing-effect (effect) ())
+(defclass continuous-effect    (effect) ())
+(defclass replacement-effect   (continuous-effect) ())
+(defclass prevention-effect    (continous-effect) ())

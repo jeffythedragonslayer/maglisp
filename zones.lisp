@@ -24,3 +24,35 @@
 (defparameter *mtg-command*     (make-instance 'command))
 (defparameter *mtg-ante*        (make-instance 'ante))
 (defparameter *mtg-sideboard*   (make-instance 'sideboard))
+
+(defun draw (player) ; move a card from the library to the hand
+        (if (null (library player))
+	    (lose-game player) 
+	    (let ((card (car (library player))))
+		    (setf (library player) (cdr (library player)))
+		    (setf (objs (hand player)) (cons card (objs (hand player)))))))
+
+(defun mill (player) ; move a card from the library to the graveyard
+        (if (null (library player))
+	    (lose-game player) 
+	    (let ((card (car (library player))))
+		    (setf (library player) (cdr (library player)))
+		    (setf (objs (graveyard player)) (cons card (objs (graveyard player)))))))
+
+(defun hand-size (player)) 
+(defun mulligan (player))
+(defun scry (player num)
+  nil)
+
+(defun push-stack     () nil)
+(defun resolve-stack  () nil)
+(defun stack-empty    () nil)
+
+(defun flicker ())
+(defun bounce ()) 
+
+(defun exile     (perm))
+(defun destroy   (perm)) 
+(defun sacrifice (perm))
+
+(defun graveyard-size (player))

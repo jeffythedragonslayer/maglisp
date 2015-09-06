@@ -1,3 +1,32 @@
+(defclass creature (card permanent)
+        ((power               :initarg :power               :accessor power)
+         (toughness           :initarg :toughness           :accessor toughness)
+         (subtype             :initarg :subtype             :accessor subtype)
+         (activated-abilities :initarg :activated-abilities :accessor activated-abilities)
+         (tap-abilities       :initarg :tap-abilities       :accessor tap-abilities)
+         (static-abilities    :initarg :static-abilities    :accessor static-abilities)
+         (sick                :initform t                   :accessor sick)
+         (damage              :initform 0                   :accessor damage)))
+
+(defun set-damage (creature dmg)
+        (setf (damage creature) dmg))
+
+(defun do-damage (creature dmg)
+        (setf (damage creature) (- (damage creature) dmg)))
+
+(defun heal (creature)
+        (setf (damage creature) 0))
+
+(defun hp (creature)
+        (- (toughness creature) (damage creature)))
+
+(defmethod print-object ((obj creature) stream)
+        (format stream "Name:    ~a~%"      (name    obj))
+        (format stream "Subtype: ~a~%"      (subtype obj))
+        (format stream "CMC:     ~a drop~%" (cmc     obj))
+        (format stream "P/T:     ~a/~a~%"   (power   obj) (toughness obj))
+        (format stream "Flavor:  ~a~%"      (flavor  obj)))
+
 (defparameter *creature-types* '(Advisor Ally Angel Antelope Ape Archer Archon Artificer Assassin Assembly-Worker Atog Aurochs Avatar
                                  Badger Barbarian Basilisk Bat Bear Beast Beeble Berserker Bird Blinkmoth Boar Bringer Brushwagg
                                  Camarid Camel Caribou Carrier Cat Centaur Cephalid Chimera Citizen Cleric Cockatrice Construct Coward Crab Crocodile Cyclops

@@ -1,0 +1,3 @@
+(defparameter *events* '(AnteCardsSelected AttackersDeclared BlockersDeclared CardAttachment CardChangeZone CardCounters CardDamaged CardDestroyed CardModeChosen CardPhased CardRegenerated CardSacrificed
+                         CardStatsChanged CardTapped CombatChanged CombatEnded FlipCoin GameFinished GameOutcome GameRestarted GameStarted LandPlayed ManaBurn ManaPool Mulligan PlayerControl PlayerDamaged
+                         PlayerLivesChanged PlayerPoisoned PlayerPriority PlayerStatsChanged Scry Shuffle SpellAbilityCast SpellRemovedFromStack SpellResolved TokenCreated TurnBegan TurnEnded TurnPhase))
