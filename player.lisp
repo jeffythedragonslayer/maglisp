@@ -21,4 +21,5 @@
 
 (defun tapped-out (player))
 
-(defun shuffle (player))
+(defun shuffle (player)
+        (shuffle-list (library player)))

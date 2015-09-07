@@ -32,6 +32,9 @@
 		    (setf (library player) (cdr (library player)))
 		    (setf (objs (hand player)) (cons card (objs (hand player)))))))
 
+(defun drawn (player n)
+        (loop for i from 1 upto n do (draw player)))
+
 (defun mill (player) ; move a card from the library to the graveyard
         (if (null (library player))
 	    (lose-game player) 

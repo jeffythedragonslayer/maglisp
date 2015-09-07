@@ -20,6 +20,3 @@
 (defclass mine        (land) ())
 (defclass power-plant (land) ())
 (defclass tower       (land) ())
-
-(defmethod print-object ((obj land) stream)
-        (format stream "Name: ~a~%" (name obj)))

@@ -59,7 +59,7 @@
 (defun get-owner      () nil)
 
 (defun converted-mana-cost (mtg-obj))
-(defgeneric damage (perm))
+;(defgeneric damage (perm))
 
 (defun tap (perm)
         (setf (tapped perm) t))
@@ -87,3 +87,5 @@
 (defun get-timestamp () 'nil)
 (defun devotion (player type))
 
+(defmethod print-object ((obj mtg-object) stream)
+        (format stream "~a~%" (name obj)))

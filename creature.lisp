@@ -21,7 +21,7 @@
         (- (toughness creature) (damage creature)))
 
 (defmethod print-object ((obj creature) stream)
-        (format stream "Name:    ~a~%"      (name    obj))
+        (format stream "~a~%"      (name    obj))
         (format stream "Subtype: ~a~%"      (subtype obj))
         (format stream "CMC:     ~a drop~%" (cmc     obj))
         (format stream "P/T:     ~a/~a~%"   (power   obj) (toughness obj))
