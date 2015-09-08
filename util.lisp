@@ -3,6 +3,8 @@
               do (rotatef (elt sequence (random i))
                           (elt sequence (1- i))))
               sequence)
+(defun sort-symbols (symbols)
+        (sort symbols (lambda (x y) (string< (symbol-name x) (symbol-name y)))))
 
 (defmacro let1 (var val &body body)
         `(let ((,var ,val))

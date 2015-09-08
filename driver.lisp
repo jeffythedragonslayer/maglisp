@@ -15,6 +15,9 @@
 (load "turn-structure.lisp")
 (load "player.lisp")
 
+(defparameter *all-cards* (remove-duplicates (sort-symbols (append (build-deck *price-of-glory*)
+                                                                   (build-deck *infernal-intervention*)))))
+
 (defparameter *player1*    (make-instance 'player :name "Bob"   :library (build-deck *price-of-glory*)))
 (defparameter *player2*    (make-instance 'player :name "Alice" :library (build-deck *infernal-intervention*)))
 (defparameter *game-over*  'nil)
