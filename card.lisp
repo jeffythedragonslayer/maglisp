@@ -52,14 +52,17 @@
 (defun get-card-loyalty         (card) (slot-value (slot-value card 'characteristics) 'loyalty))
 (defun get-card-hand-modifier   (card) (slot-value (slot-value card 'characteristics) 'hand-modifier))
 (defun get-card-life-modifier   (card) (slot-value (slot-value card 'characteristics) 'life-modifier))
-(defun tapped?                  (card) (slot-value (slot-value card 'characteristics) 'tapped))
-(defun untapped?                (card) (not (slot-value (slot-value card 'characteristics) 'tapped)))
-(defun flipped?                 (card) (slot-value (slot-value card 'characteristics) 'flipped))
-(defun unflipped?               (card) (not (slot-value (slot-value card 'characteristics) 'flipped)))
-(defun faceup?                  (card) (slot-value (slot-value card 'characteristics) 'faceup))
-(defun facedown?                (card) (not (slot-value (slot-value card 'characteristics) 'faceup)))
-(defun phasedin?                (card) (slot-value (slot-value card 'characteristics) 'phasedin))
-(defun phasedout?               (card) (slot-value (slot-value card 'characteristics) 'phasedout))
+(defun tapped?                  (card) (slot-value (slot-value card 'status) 'tapped))
+(defun untapped?                (card) (not (slot-value (slot-value card 'status) 'tapped)))
+(defun flipped?                 (card) (slot-value (slot-value card 'status) 'flipped))
+(defun unflipped?               (card) (not (slot-value (slot-value card 'status) 'flipped)))
+(defun faceup?                  (card) (slot-value (slot-value card 'status) 'faceup))
+(defun facedown?                (card) (not (slot-value (slot-value card 'status) 'faceup)))
+(defun phasedin?                (card) (slot-value (slot-value card 'status) 'phasedin))
+(defun phasedout?               (card) (slot-value (slot-value card 'status) 'phasedout))
+
+(defun tap!   (card) (setf (slot-value (slot-value card 'status) 'tapped) t))
+(defun untap! (card) (setf (slot-value (slot-value card 'status) 'tapped) nil))
 
 (defun land?         (card) (member 'land         (get-card-cardtypes card)))
 (defun creature?     (card) (member 'creature     (get-card-cardtypes card)))
@@ -145,14 +148,7 @@
 (defun get-controller () nil)
 (defun get-owner      () nil)
 
-;(defun converted-mana-cost (mtg-obj))
 ;(defgeneric damage (perm))
-
-;(defun tap (perm)
-;        (setf (tapped perm) t))
-
-;(defun untap (perm)
-;        (setf (tapped perm) nil))
 
 ;(defun flip-faceup (perm)
 ;        (setf (facedown perm) nil))
@@ -174,5 +170,8 @@
 ;(defun get-timestamp () 'nil)
 ;(defun devotion (player type))
 
-(defmethod print-object ((obj card) stream)
-        (format stream "~a~%" (get-card-name obj)))
+(defmethod print-card (card)
+        (format t "~a" (get-card-name card))
+        (when (tapped? card)
+                (format t " - T"))
+        (format t "~%"))

@@ -14,13 +14,6 @@
 (defun hp (creature)
         (- (toughness (characteristics creature)) (damage (creature-data creature))))
 
-;(defmethod print-object ((obj creature) stream)
-;        (format stream "~a~%"      (name    obj))
-;        (format stream "Subtype: ~a~%"      (subtype obj))
-;        (format stream "CMC:     ~a drop~%" (cmc     obj))
-;        (format stream "P/T:     ~a/~a~%"   (power   obj) (toughness obj))
-;        (format stream "Flavor:  ~a~%"      (flavor  obj)))
-
 (defparameter *creature-types* '(Advisor Ally Angel Antelope Ape Archer Archon Artificer Assassin Assembly-Worker Atog Aurochs Avatar
                                  Badger Barbarian Basilisk Bat Bear Beast Beeble Berserker Bird Blinkmoth Boar Bringer Brushwagg
                                  Camarid Camel Caribou Carrier Cat Centaur Cephalid Chimera Citizen Cleric Cockatrice Construct Coward Crab Crocodile Cyclops
