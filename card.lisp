@@ -30,9 +30,10 @@
          (phasedin :initarg :phasedin :initform t)))
 
 (defclass card (mtg-object)
-        ((artist              :initarg :artist)
-         (rarity              :initarg :rarity)
+        ((artist              :initarg :artist          :initform "")
+         (rarity              :initarg :rarity          :initform "")
          (flavor              :initarg :flavor          :initform "")
+	 (issick              :initarg :issick          :initform nil)
          (characteristics     :initarg :characteristics :initform (make-instance 'characteristics))
          (status              :initarg :status          :initform (make-instance 'status))))
 
@@ -60,9 +61,12 @@
 (defun facedown?                (card) (not (slot-value (slot-value card 'status) 'faceup)))
 (defun phasedin?                (card) (slot-value (slot-value card 'status) 'phasedin))
 (defun phasedout?               (card) (slot-value (slot-value card 'status) 'phasedout))
+(defun sick?                    (card) (slot-value card 'issick))
 
-(defun tap!   (card) (setf (slot-value (slot-value card 'status) 'tapped) t))
-(defun untap! (card) (setf (slot-value (slot-value card 'status) 'tapped) nil))
+(defun tap!     (card) (setf (slot-value (slot-value card 'status) 'tapped) t))
+(defun untap!   (card) (setf (slot-value (slot-value card 'status) 'tapped) nil))
+(defun notsick! (card) (setf (slot-value card 'issick) nil))
+(defun sick!    (card) (setf (slot-value card 'issick) t))
 
 (defun land?         (card) (member 'land         (get-card-cardtypes card)))
 (defun creature?     (card) (member 'creature     (get-card-cardtypes card)))
@@ -174,4 +178,6 @@
         (format t "~a" (get-card-name card))
         (when (tapped? card)
                 (format t " - T"))
+	(when (sick? card)
+	        (format t " - S"))
         (format t "~%"))
