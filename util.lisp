@@ -3,6 +3,7 @@
               do (rotatef (elt sequence (random i))
                           (elt sequence (1- i))))
               sequence)
+
 (defun sort-symbols (symbols)
         (sort symbols (lambda (x y) (string< (symbol-name x) (symbol-name y)))))
 
@@ -11,6 +12,8 @@
                 ,@body))
 
 (defparameter *use-colors* t)
+
+(defun bw () (setf *use-colors* nil))
 
 (defmacro with-color (col &body body)
         `(progn

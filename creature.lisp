@@ -1,6 +1,6 @@
 (defclass creature-data ()
-         ((sick   :initform t :accessor sick)
-          (damage :initform 0 :accessor damage)))
+         ((sick   :initform t)
+          (damage :initform 0)))
 
 (defun set-damage (creature dmg)
         (setf (damage (creature-data creature)) dmg))
