@@ -15,6 +15,13 @@
 
 (defun bw () (setf *use-colors* nil))
 
+(defun beep ()
+        (format t "~a" #\bell))
+
+(defun beep-format (&rest vals)
+        (beep)
+        (apply #'format vals))
+
 (defmacro with-color (col &body body)
         `(progn
                 (when *use-colors* (color ,col))
