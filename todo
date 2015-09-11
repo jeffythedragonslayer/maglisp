@@ -1,7 +1,0 @@
-attack only during combat steps
-prompt other player for blockers
-vigilance
-state based actions lambda list
-game over from zero life state based action
-game over from deck out state based action
-cast instant/sorcery

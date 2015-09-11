@@ -46,6 +46,20 @@
         (format t "la                   - list attackers~%")
         (format t "concede              - concede the game~%"))
 
+(defun list-blockers-commands ()
+        (format t "commands available:~%")
+        (format t "commit               - commit to chosen blockers~%")
+        (format t "h                    - list cards in hand~%")
+        (format t "b                    - list cards on battlefield~%")
+        (format t "g                    - list cards in graveyard~%")
+        (format t "e                    - list cards in exile zone~%")
+        (format t "fm                   - free mana~%")
+        (format t "mp                   - see mana pool~%")
+        (format t "block [bnum]         - block opponent with a creature~%")
+        (format t "unblock [bnum]       - don't block opponent with a creature~%")
+        (format t "la                   - list attackers~%")
+        (format t "concede              - concede the game~%"))
+
 (defun free-mana ()
         (set-player-manapool *active-player* (+ 1 (get-player-manapool *active-player*))))
 
@@ -102,6 +116,7 @@
 	    (condition () (beep-format t "enter an integer between 0 and battlefieldsize-1~%"))))
 
 (defparameter *declared-attackers* nil)
+(defparameter *declared-blockers*  nil)
 
 (defun attack-withcard (nstr)
         (handler-case
@@ -125,18 +140,46 @@
                       (setf *declared-attackers* (remove c *declared-attackers*)))
                 (condition () (format t "enter an integer between 0 and battlefieldsize-1~%"))))
 
+(defun block-withcard (nstr)
+        (handler-case
+	        (let1 c (nth (parse-integer nstr) *battlefield*)
+		      (unless (creature? c)                   (beep-format t "~a not a creature, can't block~%"                   (get-card-name c)) (return-from block-withcard))
+                      (when   (tapped?   c)                   (beep-format t "~a tapped, can't block~%"                           (get-card-name c)) (return-from block-withcard))
+                      (when   (member c *declared-attackers*) (beep-format t "already blocking with ~a~%"                         (get-card-name c)) (return-from block-withcard))
+                      (format t "going to block with ~a~%" (get-card-name c))
+                      (setf *declared-attackers* (cons c *declared-attackers*)))
+                (condition () (beep-format t "enter an integer between 0 and battlefieldsize-1~%"))))
+
+(defun unblock-withcard (nstr)
+        (handler-case
+	        (let1 c (nth (parse-integer nstr) *battlefield*)
+		      (unless (creature? c)                   (beep-format t "~a not a creature, can't block~%"                    (get-card-name c)) (return-from unblock-withcard))
+                      (when   (tapped?   c)                   (beep-format t "~a tapped, can't block~%"                            (get-card-name c)) (return-from unblock-card))
+                      (unless (member c *declared-attackers*) (beep-format t "already not blocking with ~a~%"                      (get-card-name c)) (return-from unblock-card))
+                      (format t "not going to block with ~a~%" (get-card-name c))
+                      (setf *declared-attackers* (remove c *declared-attackers*)))
+                (condition () (format t "enter an integer between 0 and battlefieldsize-1~%"))))
+
 (defun commit-attackers ()
+        (format t "commited attackers~%"))
+
+(defun deal-damage ()
         (mapcar (lambda (c)
                         (let1 num (get-card-power c)
                               (lose-life *nonactive-player* num)
                               (format t "~a dealt ~a damage to ~a~%" (get-card-name c) num (get-player-name *nonactive-player*))))
                 *declared-attackers*)
-        (setf *declared-attackers* nil))
+        (setf *declared-attackers* nil)
+        (setf *declared-blockers*  nil))
 
-(defun list-attackers ()
-        (mapcar #'print-card *declared-attackers*))
+(defun commit-blockers ()
+        (format t "committed blockers~%"))
+
+(defun list-attackers () (mapcar #'print-card *declared-attackers*)) 
+(defun list-blockers  () (mapcar #'print-card *declared-blockers*))
 
 (defun get-priority ()
+        (check-state-based-actions)
 	(loop   (with-color 'red (format t "~a priority-> " (get-player-name *active-player*)))
                 (finish-output nil)
                 (let1 a (read-line)
@@ -147,7 +190,6 @@
                               ((string-begins-with a "desc")   (describe-card   (string-trim-first-n a 5)))
                               ((string-begins-with a "tap")    (tap-card        (string-trim-first-n a 4)))
                               ((string-begins-with a "untap")  (untap-card      (string-trim-first-n a 6)))
-			      ((string-begins-with a "attack") (attack-withcard (string-trim-first-n a 7)))
                               ((equalp a "activate")           (format t "activate~%"))
                               ((equalp a "faceup")             (format t "faceup"))
                               ((equalp a "mp")                 (list-manapool))
@@ -159,14 +201,14 @@
 			      ((equalp a "life")               (list-life))
                               (t                               (progn (beep) (list-commands)))))))
 
-(defun prompt-attackers () 
-	(loop   (with-color 'red (format t "~a attackers-> " (get-player-name *active-player*)))
+(defun prompt-attackers (player)
+	(loop   (with-color 'red (format t "~a attackers-> " (get-player-name player)))
                 (finish-output nil)
                 (let1 a (read-line)
                         (cond ((equalp a "concede")              (progn (format t "conceding~%") (concede *active-player*) (return)))
                               ((equalp a "commit")               (progn (commit-attackers)                                 (return)))
-			      ((string-begins-with a "attack")   (attack-withcard   (string-trim-first-n a 7))) 
-			      ((string-begins-with a "unattack") (unattack-withcard (string-trim-first-n a 9))) 
+			      ((string-begins-with a "attack")   (  attack-withcard (string-trim-first-n a 7)))
+			      ((string-begins-with a "unattack") (unattack-withcard (string-trim-first-n a 9)))
                               ((equalp a "la")                   (list-attackers))
                               ((equalp a "mp")                   (list-manapool))
                               ((equalp a "fm")                   (free-mana))
@@ -176,6 +218,24 @@
                               ((equalp a "e")                    (list-exile))
 			      ((equalp a "life")                 (list-life))
                               (t                                 (progn (list-attackers-commands) (beep)))))))
+
+(defun prompt-blockers (player)
+	(loop   (with-color 'red (format t "~a blockers-> " (get-player-name player)))
+                (finish-output nil)
+                (let1 a (read-line)
+                        (cond ((equalp a "concede")              (progn (format t "conceding~%") (concede *active-player*) (return)))
+                              ((equalp a "commit")               (progn (commit-blockers)                                  (return)))
+			      ((string-begins-with a "block")    (  block-withcard (string-trim-first-n a 6)))
+			      ((string-begins-with a "unblock")  (unblock-withcard (string-trim-first-n a 8)))
+                              ((equalp a "la")                   (list-blockers))
+                              ((equalp a "mp")                   (list-manapool))
+                              ((equalp a "fm")                   (free-mana))
+                              ((equalp a "h")                    (list-hand))
+                              ((equalp a "b")                    (list-battlefield))
+                              ((equalp a "g")                    (list-graveyard))
+                              ((equalp a "e")                    (list-exile))
+			      ((equalp a "life")                 (list-life))
+                              (t                                 (progn (list-blockers-commands) (beep)))))))
 
 (defun untap-all       () (mapcar #'untap! *battlefield*)) 
 (defun empty-manapools () (mapcar #'empty-manapool *all-players*))
@@ -220,20 +280,22 @@
       (get-priority) ;507.3
       (empty-manapools))
 
-
 (defun declare-attackers-step () 
       (with-color 'yellow (format t "Declare Attackers Step~%"))
-      (prompt-attackers)
+      (prompt-attackers *active-player*)
+      (mapcar #'tap! *declared-attackers*)
       (get-priority)
       (empty-manapools))
 
 (defun declare-blockers-step ()
       (with-color 'yellow (format t "Declare Blockers Step~%"))
+      (prompt-blockers *nonactive-player*)
       (get-priority)
       (empty-manapools))
 
 (defun combat-damage-step () 
       (with-color 'yellow (format t "Combat Damage Step~%"))
+      (deal-damage)
       (get-priority)
       (empty-manapools))
 
@@ -249,8 +311,10 @@
         (with-color 'green (format t "--- Combat Phase ---~%"))
         (beginning-of-combat-step)
         (declare-attackers-step)
-        (declare-blockers-step)
-        (combat-damage-step)
+        (if *declared-attackers*
+            (progn (declare-blockers-step)
+                   (combat-damage-step))
+            (format t "no attackers, skipping declare blockers and combat damage steps~%")) ; 508.6
         (end-of-combat-step)
         (empty-manapools))
 
@@ -261,8 +325,8 @@
 
 (defun cleanup-step ()
         (with-color 'yellow (format t "Cleanup Step~%"))
+        (discard-downto *active-player* 7)
         (empty-manapools))
-
 
 (defun ending-phase ()
         (with-color 'green (format t "--- Ending Phase ---~%"))
@@ -277,8 +341,7 @@
         (setf *active-player* player) 
 	(if (equal *active-player* *bob*)
 	    (setf *nonactive-player* *alice*)
-	    (setf *nonactive-player* *alice*))
-	  
+	    (setf *nonactive-player* *alice*)) 
 	(set-player-playedland *active-player* nil)
 	(reset-summoning-sickness)
         (with-color 'cyan (format t "========= ~a's Turn =========~%" (get-player-name player)))

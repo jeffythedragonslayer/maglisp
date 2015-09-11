@@ -12,6 +12,7 @@
 (defun get-player-library    (player) (slot-value player 'library))
 (defun get-player-poison     (player) (slot-value player 'poison))
 (defun get-player-hand       (player) (slot-value player 'hand))
+(defun get-player-handsize   (player) (length (slot-value player 'hand)))
 (defun get-player-manapool   (player) (slot-value player 'manapool))
 (defun get-player-playedland (player) (slot-value player 'playedland))
 
@@ -41,6 +42,9 @@
          (teammates :initarg :teammates)))
 
 ;(defun tapped-out (player))
+
+(defun discard-downto (player num)
+        (when (> (get-player-handsize player) num) (format t "discarding down to ~a~%" num)))
 
 (defun shuffle (player)
         (shuffle-list (get-player-library player)))
