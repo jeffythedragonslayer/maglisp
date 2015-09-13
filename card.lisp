@@ -1,5 +1,3 @@
-(load "zones.lisp")
-
 (defparameter *tap-symbol*   'T)
 (defparameter *untap-symbol* 'Q)
 
@@ -33,7 +31,8 @@
         ((artist              :initarg :artist          :initform "")
          (rarity              :initarg :rarity          :initform "")
          (flavor              :initarg :flavor          :initform "")
-	 (issick              :initarg :issick          :initform nil)
+         (creature-dat                                  :initform (make-instance 'creature-data))
+         ;(planeswalker-dat                              :initform (make-instance 'planeswalker-data))
          (characteristics     :initarg :characteristics :initform (make-instance 'characteristics))
          (status              :initarg :status          :initform (make-instance 'status))))
 
@@ -61,12 +60,9 @@
 (defun facedown?                (card) (not (slot-value (slot-value card 'status) 'faceup)))
 (defun phasedin?                (card) (slot-value (slot-value card 'status) 'phasedin))
 (defun phasedout?               (card) (slot-value (slot-value card 'status) 'phasedout))
-(defun sick?                    (card) (slot-value card 'issick))
 
 (defun tap!     (card) (setf (slot-value (slot-value card 'status) 'tapped) t))
 (defun untap!   (card) (setf (slot-value (slot-value card 'status) 'tapped) nil))
-(defun notsick! (card) (setf (slot-value card 'issick) nil))
-(defun sick!    (card) (setf (slot-value card 'issick) t))
 
 (defun land?         (card) (member 'land         (get-card-cardtypes card)))
 (defun creature?     (card) (member 'creature     (get-card-cardtypes card)))
@@ -83,6 +79,7 @@
 	       (stats (make-instance 'status))
 	       (c     (make-instance 'card)))
 	  (progn
+                (when static-abilities (setf (slot-value chars 'abilities) static-abilities))
                 (setf (slot-value chars 'name)      name)
                 (setf (slot-value chars 'cmc)       cmc)
                 (setf (slot-value chars 'colors)    colors)
@@ -174,10 +171,11 @@
 ;(defun get-timestamp () 'nil)
 ;(defun devotion (player type))
 
+(defun has-static-ability? (card ability)
+        (member ability (get-card-abilities card)))
+
 (defmethod print-card (card)
         (format t "~a" (get-card-name card))
-        (when (tapped? card)
-                (format t " - T"))
-	(when (sick? card)
-	        (format t " - S"))
+        (when (tapped? card) (format t " - T"))
+	(when (sick?   card) (format t " - S"))
         (format t "~%"))

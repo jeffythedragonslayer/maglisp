@@ -1,15 +1,22 @@
-(defun zero-life-die ()  ;704.5a If a player has 0 or less life, he or she loses the game.  
+ ;704.5a If a player has 0 or less life, he or she loses the game.
+(defun zero-life-die ()
         (mapcar (lambda (x)
                         (unless (plusp (get-player-life x))
                                 (lose-game x)))
                 *all-players*))
 
-
-(defun draw-empty-library-die        () "blah") ;704.5b If a player attempted to draw a card from a library with no cards in it since the last time state-based actions were checked, he or she loses the game.  
-(defun poison-die                    () ;704.5c If a player has ten or more poison counters, he or she loses the game. Ignore this rule in Two-Headed Giant games; see rule 704.5u instead.  
+;704.5b If a player attempted to draw a card from a library with no cards in it since the last time state-based actions were checked, he or she loses the game.
+(defun draw-empty-library-die ()
         (mapcar (lambda (x)
-                        (when (> (get-player-poison x) 10))
-                                (lose-game x))
+                        (when (get-player-emptydraw x)
+                              (lose-game x)))
+                *all-players*))
+
+;704.5c If a player has ten or more poison counters, he or she loses the game. Ignore this rule in Two-Headed Giant games; see rule 704.5u instead.
+(defun poison-die ()
+        (mapcar (lambda (x) 
+                        (when (> (get-player-poison x) 10) 
+                              (lose-game x)))
                 *all-players*))
 
 
@@ -17,11 +24,25 @@
 (defun spell-copy-die                () "blah") ;704.5e If a copy of a spell is in a zone other than the stack, it ceases to exist.
                                                 ; If a copy of a card is in any zone other than the stack or the battlefield, it ceases to exist.
 (defun creature-zero-toughness-die   () "blah") ;704.5f If a creature has toughness 0 or less, it’s put into its owner’s graveyard. Regeneration can’t replace this event.  
-(defun creature-lethal-damage-die    () "blah") ;704.5g If a creature has toughness greater than 0, and the total damage marked on it is greater than or equal to its toughness, 
+
+(defun creature-lethal-damage-die    () "blah");704.5g If a creature has toughness greater than 0, and the total damage marked on it is greater than or equal to its toughness, 
                                                 ; that creature has been dealt lethal damage and is destroyed. Regeneration can replace this event.  
-(defun creature-deathtouch-die       () "blah") ;704.5h If a creature has toughness greater than 0, and it’s been dealt damage by a source with deathtouch since the last time state-based actions were checked,
-                                                ;that creature is destroyed. Regeneration can replace this event.
-(defun planeswalker-zero-loyalty-die () "blah") ;704.5i If a planeswalker has loyalty 0, it’s put into its owner’s graveyard.
+
+;704.5h If a creature has toughness greater than 0, and it’s been dealt damage by a source with deathtouch since the last time state-based actions were checked,
+;that creature is destroyed. Regeneration can replace this event.
+(defun creature-deathtouch-die ()
+        (mapcar (lambda (x)
+                        (when (deathtouched? x)
+                              (destroy x))
+                              (format t "~a died from deathtouch~%" (get-card-name x)))
+                *battlefield*))
+
+(defun planeswalker-zero-loyalty-die () ;704.5i If a planeswalker has loyalty 0, it’s put into its owner’s graveyard.
+        (mapcar (lambda (x)
+                        (when (and (planeswalker? x) (<= (get-planeswalker-loyalty x) 0))
+                              (destroy x)))
+                *battlefield*))
+
 (defun planeswalker-uniqueness-rule  () "blah") ;704.5j If a player controls two or more planeswalkers that share a planeswalker type,
                                                 ; that player chooses one of them, and the rest are put into their owners’ graveyards. This is called the “planeswalker uniqueness rule.”
 (defun legend-rule                   () "blah") ;704.5k If a player controls two or more legendary permanents with the same name,

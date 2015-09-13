@@ -5,6 +5,7 @@
          (hand     :initarg :hand    :initform nil)
          (poison                     :initform 0)
          (playedland                 :initform nil)
+         (emptydraw                  :initform nil)
          (manapool                   :initform 0)))
  
 (defun get-player-name       (player) (slot-value player 'name))
@@ -15,6 +16,7 @@
 (defun get-player-handsize   (player) (length (slot-value player 'hand)))
 (defun get-player-manapool   (player) (slot-value player 'manapool))
 (defun get-player-playedland (player) (slot-value player 'playedland))
+(defun get-player-emptydraw  (player) (slot-value player 'emptydraw))
 
 (defun set-player-name       (player name) (setf (slot-value player 'name)     name))
 (defun set-player-life       (player life) (setf (slot-value player 'life)     life))
@@ -23,6 +25,7 @@
 (defun set-player-hand       (player hand) (setf (slot-value player 'hand)     hand))
 (defun set-player-manapool   (player size) (setf (slot-value player 'manapool) size))
 (defun set-player-playedland (player tf)   (setf (slot-value player 'playedland) tf))
+(defun set-player-emptydraw  (player)      (setf (slot-value player 'emptydraw) t))
 
 (defun empty-manapool (player) (set-player-manapool player 0))
 

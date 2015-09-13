@@ -1,6 +1,13 @@
 (defclass creature-data ()
-         ((sick   :initform t)
-          (damage :initform 0)))
+         ((sick         :initform t)
+          (deathtouched :initform nil)
+          (damage       :initform 0)))
+
+(defun sick?         (creat)       (slot-value (slot-value creat 'creature-dat) 'sick))
+(defun notsick!      (creat) (setf (slot-value (slot-value creat 'creature-dat) 'sick) nil))
+(defun sick!         (creat) (setf (slot-value (slot-value creat 'creature-dat) 'sick) t))
+(defun deathtouched? (creat)       (slot-value (slot-value creat 'creature-dat) 'deathtouched))
+(defun deathtouch!   (creat) (setf (slot-value (slot-value creat 'creature-dat) 'deathtouched) t))
 
 (defun set-damage (creature dmg)
         (setf (damage (creature-data creature)) dmg))
@@ -16,8 +23,7 @@
 
 (defparameter *creature-types* '(Advisor Ally Angel Antelope Ape Archer Archon Artificer Assassin Assembly-Worker Atog Aurochs Avatar
                                  Badger Barbarian Basilisk Bat Bear Beast Beeble Berserker Bird Blinkmoth Boar Bringer Brushwagg
-                                 Camarid Camel Caribou Carrier Cat Centaur Cephalid Chimera Citizen Cleric Cockatrice Construct Coward Crab Crocodile Cyclops
-
+                                 Camarid Camel Caribou Carrier Cat Centaur Cephalid Chimera Citizen Cleric Cockatrice Construct Coward Crab Crocodile Cyclops 
                                  Efreet Elder Eldrazi Elemental Elephant Elf Elk Eye
                                  Faerie Ferret Fish Flagbearer Fox Frog Fungus
                                  Gargoyle Germ Giant Gnome Goat Goblin God Golem Gorgon Graveborn Gremlin Griffin

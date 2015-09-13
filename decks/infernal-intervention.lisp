@@ -15,7 +15,7 @@
                    :subtype 'gargoyle
                    :power 3
                    :toughness 5
-                   :static-abilities 'defender
+                   :static-abilities '(defender)
                    :tap-abilities "hi"))
 
 (defparameter *goblin-roughrider*
@@ -96,7 +96,7 @@
                    :subtype 'wall
                    :power 0
                    :toughness 5
-                   :static-abilities 'defender
+                   :static-abilities '(defender)
                    :activated-abilities "Wall of Fire gets +1/+0 until end of turn."
                    :flavor "Mercy is for those who keep their distance."))
 
