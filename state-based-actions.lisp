@@ -33,7 +33,8 @@
 ;704.5f If a creature has toughness 0 or less, it’s put into its owner’s graveyard. Regeneration can’t replace this event.  
 (defun creature-zero-toughness-die ()
         (mapcar (lambda (x)
-                        (when (<= (get-card-toughness x) 0)
+                        (when (and (creature? x)
+                                   (<= (get-card-toughness x) 0))
                               (destroy x)))
                 *battlefield*)
         nil)
@@ -43,7 +44,8 @@
 ; that creature has been dealt lethal damage and is destroyed. Regeneration can replace this event.  
 (defun creature-lethal-damage-die ()
         (mapcar (lambda (x)
-                        (when (<= (hp x) 0)
+                        (when (and (creature? x)
+                                   (<= (hp x) 0))
                               (destroy x)))
                 *battlefield*)
         nil)
