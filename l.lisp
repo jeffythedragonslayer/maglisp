@@ -1,6 +1,8 @@
 (load "util.lisp")
+(load "planeswalker.lisp")
 (load "zones.lisp")
 (load "creature.lisp")
+(load "planeswalker.lisp")
 (load "card.lisp")
 (load "land.lisp")
 (load "decks/deck-util.lisp")

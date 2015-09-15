@@ -6,6 +6,10 @@
 (defparameter *all-players* (list *bob* *alice*))
 (defparameter *game-over* 'nil)
 
+(defparameter *apnap-circle* (copy-list *all-players*))
+(circular! *apnap-circle*)
+
+
 (defun main ()
         (shuffle *bob*)
         (shuffle *alice*)

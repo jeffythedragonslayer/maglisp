@@ -12,7 +12,6 @@
 (defparameter +plains+   (make-card :types '(land) :name "Plains"))
 (defparameter +mountain+ (make-card :types '(land) :name "Mountain"))
 
-
 ;(defclass desert      (land) ())
 ;(defclass gate        (land) ())
 ;(defclass lair        (land) ())

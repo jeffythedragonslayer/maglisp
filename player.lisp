@@ -50,4 +50,4 @@
         (when (> (get-player-handsize player) num) (format t "discarding down to ~a~%" num)))
 
 (defun shuffle (player)
-        (shuffle-list (get-player-library player)))
+        (shuffle-list! (get-player-library player)))

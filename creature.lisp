@@ -9,13 +9,13 @@
 (defun deathtouched? (creat)       (slot-value (slot-value creat 'creature-dat) 'deathtouched))
 (defun deathtouch!   (creat) (setf (slot-value (slot-value creat 'creature-dat) 'deathtouched) t))
 
-(defun set-damage (creature dmg)
+(defun set-damage! (creature dmg)
         (setf (damage (creature-data creature)) dmg))
 
-(defun do-damage (creature dmg)
+(defun do-damage! (creature dmg)
         (setf (damage (creature-data creature)) (- (damage (creature-data creature)) dmg)))
 
-(defun heal (creature)
+(defun heal! (creature)
         (setf (damage (creature-data creature)) 0))
 
 (defun hp (creature)
@@ -38,7 +38,8 @@
                                  Pegasus Pentavite Pest Phelddagrif Phoenix Pincher Pirate Plant Praetor Prism
                                  Rabbit Rat Rebel Reflection Rhino Rigger Rogue
                                  Sable Salamander Samurai Sand Saproling Satyr Scarecrow Scorpion Scout Serf Serpent Shade Shaman
-                                        Shapeshifter Sheep Siren Skeleton Slith Sliver Slug Snake Soldier Soltari Spawn Specter Spellshaper Sphinx Spider Spike Spirit Splinter Sponge Squid Squirrel Starfish Surrakar Survivor
+                                        Shapeshifter Sheep Siren Skeleton Slith Sliver Slug Snake Soldier Soltari Spawn Specter
+                                        Spellshaper Sphinx Spider Spike Spirit Splinter Sponge Squid Squirrel Starfish Surrakar Survivor
                                  Tetravite Thalakos Thopter Thrull Treefolk Triskelavite Troll Turtle
                                  Unicorn
                                  Vampire Vedalken Viashino Volver
@@ -46,7 +47,8 @@
                                  Yeti
                                  Zombie Zubera))
 
-(defparameter *obsolete-creature-types* '(Abomination Aboroth Aesthir Aladdin Albatross Alchemist Ali-Baba Ali-from-Cairo Alligator Ambush-Party Ancestor Anemone Ant Anteater Archaeologist Asp Autocrat Avenger Avizoa
+(defparameter *obsolete-creature-types* '(Abomination Aboroth Aesthir Aladdin Albatross Alchemist Ali-Baba Ali-from-Cairo Alligator Ambush-Party
+                                                      Ancestor Anemone Ant Anteater Archaeologist Asp Autocrat Avenger Avizoa
                                           Ball-Lightning Bandit Banshee Barishi Bee Behemoth Being Blinking-Spirit Bodyguard Brother Brownie Bull Bureaucrat Butterfly
                                           Caravan Carnivore Carriage Caterpillar Cavalry Cave-People Cheetah Chicken Child Clamfolk Clone Cobra Constable Cow Crusader
                                           Dandân Dead Dervish Designer Devouring-Deep Dinosaur Dog Donkey Doppelganger Dragonfly Drill-Sergeant
@@ -58,14 +60,19 @@
                                           Jackal
                                           Keeper Kelp King
                                           Lady-of-Proper-Etiquette Legend Legionnaire Lemure Leper Lichenthrope Lion Lord Lord of Atlantis Lurker Lycanthrope
-                                          Mage Maiden Mammoth Marid Master Medusa Lost-Soul Mana-Bird Mantis Martyr Meerkat Merchant Mime Mindsucker Minor Miracle-Worker Mist Mob Mold-Demon Monkey Mosquito Monster Mummy Murk-Dweller
+                                          Mage Maiden Mammoth Marid Master Medusa Lost-Soul Mana-Bird Mantis Martyr Meerkat Merchant Mime Mindsucker
+                                                Minor Miracle-Worker Mist Mob Mold-Demon Monkey Mosquito Monster Mummy Murk-Dweller
                                           Nameless-Race Nature-Spirit Narwhal Necrosavant Nekrataal Niall-Silvain Night-Stalker Noble
                                           Paladin Paratrooper Peacekeeper Penguin People-of-the-Woods Phantasm Pig Pigeon Pikemen Pixie-Queen Poison-Snake Poltergeist Pony Preacher Priest Pyknite Python
                                           Rag-Man Raider Ranger Rider Robber Roc Rock-Sled Rooster Rukh
                                           Sage Scavenger Scavenger-Folk Shadow Shark Ship Shyft Sindbad Singing-Tree Sister Smith Sorcerer Sorceress Speaker Sprite Spuzzem Spy Squire Stangg-Twin Strider Swarm
-                                          Tactician Tarpan Taskmaster Teddy Thief The-Biggest-Baddest-Nastiest-Scariest-Creature-You'll-Ever-See Thundermare Tiger Titan Toad Tombspawn Tortoise Townsfolk Tracker Twin
+                                          Tactician Tarpan Taskmaster Teddy Thief The-Biggest-Baddest-Nastiest-Scariest-Creature-You'll-Ever-See
+                                                Thundermare Tiger Titan Toad Tombspawn Tortoise Townsfolk Tracker Twin
                                           Uncle-Istvan Undead
                                           Viper Villain Vulture
-                                          Waiter Walking-Dead War-Rider Warthog Wasp Whippoorwill Wight Wiitigo Wildcat Wildebeest Will-O'-The-Wisp Witch Wirefly Wolverine-Pack Wolves-of-the-Hunt Wood Wretched Wyvern))
+                                          Waiter Walking-Dead War-Rider Warthog Wasp Whippoorwill Wight Wiitigo Wildcat Wildebeest Will-O'-The-Wisp
+                                                Witch Wirefly Wolverine-Pack Wolves-of-the-Hunt Wood Wretched Wyvern))
 
-(defparameter *plane-types* '(Alara Arkhos Azgol Belenon Bolas’sMeditationRealm Dominaria Equilor Ergamon Fabacin Innistrad Iquatana Ir Kaldheim Kamigawa Karsus Kephalai Kinshala Kolbahan Kyneth Lorwyn Luvion Mercadia Mirrodin Moag Mongseng Muraganda New Phyrexia Phyrexia Pyrulea Rabiah Rath Ravnica Regatha Segovia Serra’s Realm Shadowmoor Shandalar Ulgrotha Valla Vryn Wildfire Xerex Zendikar))
+(defparameter *plane-types* '(Alara Arkhos Azgol Belenon Bolas’sMeditationRealm Dominaria Equilor Ergamon Fabacin Innistrad Iquatana Ir Kaldheim
+                              Kamigawa Karsus Kephalai Kinshala Kolbahan Kyneth Lorwyn Luvion Mercadia Mirrodin Moag Mongseng Muraganda
+                              NewPhyrexia Phyrexia Pyrulea Rabiah Rath Ravnica Regatha Segovia Serra’s Realm Shadowmoor Shandalar Ulgrotha Valla Vryn Wildfire Xerex Zendikar))

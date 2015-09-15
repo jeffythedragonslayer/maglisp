@@ -32,7 +32,7 @@
          (rarity              :initarg :rarity          :initform "")
          (flavor              :initarg :flavor          :initform "")
          (creature-dat                                  :initform (make-instance 'creature-data))
-         ;(planeswalker-dat                              :initform (make-instance 'planeswalker-data))
+         (planeswalker-dat                              :initform (make-instance 'planeswalker-data))
          (characteristics     :initarg :characteristics :initform (make-instance 'characteristics))
          (status              :initarg :status          :initform (make-instance 'status))))
 

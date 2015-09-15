@@ -29,16 +29,15 @@
 (defun scry (player num)
         nil)
 
-(defun push-stack     (card)
+(defun push-stack (card)
         (setf *stack* (cons card *stack*)))
 
-;(defun resolve-stack  (spell)
- ;       (if (or (artifact? spell)
- ;               (instant?  spell))
-;            (progn
-;                (format t "resolving ~a~%" (get-card-name spell)))))
+(defun resolve-stack ()
+        (let1 spell (car *stack*)
+                (setf *battlefield* (cons spell *battlefield*))
+                (setf *stack* (cdr *stack*))))
 
-(defun stack-empty    () (null *stack*))
+(defun stack-empty () (null *stack*))
 
 (defun change-zones (card old-zone new-zone)
         (setf old-zone (remove card old-zone :count 1))
@@ -54,5 +53,5 @@
 (defun destroy   (perm) (change-zones perm *battlefield* *graveyard*)) 
 (defun sacrifice (perm) (change-zones perm *battlefield* *graveyard*))
 
-;(defun graveyard-size (player)
-;        )
+(defun graveyard-size (player)
+        (length *graveyard*))
