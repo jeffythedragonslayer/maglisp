@@ -19,3 +19,6 @@
               (turn *alice*))
 	(format t "Game ended~%"))
 
+(defun bwmain ()
+        (bw)
+        (main))
