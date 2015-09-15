@@ -1,4 +1,6 @@
 (load "util.lisp")
+(load "player.lisp")
+(load "game.lisp")
 (load "planeswalker.lisp")
 (load "zones.lisp")
 (load "creature.lisp")
@@ -15,5 +17,4 @@
 (load "variants/shared-team-turns.lisp")
 (load "decks/deck-util.lisp")
 (load "turn-structure.lisp")
-(load "player.lisp")
 (load "driver.lisp")

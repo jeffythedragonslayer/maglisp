@@ -1,12 +1,11 @@
-(defparameter *all-cards* (append (build-singleton-deck *price-of-glory*)
+(setf *all-cards* (append (build-singleton-deck *price-of-glory*)
                                   (build-singleton-deck *infernal-intervention*)))
 
 (defparameter *bob*   (make-instance 'player :name "Bob"   :library (build-deck *price-of-glory*)))
 (defparameter *alice* (make-instance 'player :name "Alice" :library (build-deck *infernal-intervention*)))
-(defparameter *all-players* (list *bob* *alice*))
-(defparameter *game-over* 'nil)
+(setf *all-players* (list *bob* *alice*))
 
-(defparameter *apnap-circle* (copy-list *all-players*))
+(setf *apnap-circle* (copy-list *all-players*))
 (circular! *apnap-circle*)
 
 
@@ -20,15 +19,3 @@
               (turn *alice*))
 	(format t "Game ended~%"))
 
-(defun win-game (player)
-        (format t "Game Over ")
-        (format t "~a~%" (get-player-name player)))
-
-(defun lose-game (player)
-        (setf *game-over* t)
-        (format t "Game Over ")
-        (format t "~a~%" (get-player-name player))
-        (error 'gameover "game over"))
-
-(defun concede (player)
-        (lose-game player))

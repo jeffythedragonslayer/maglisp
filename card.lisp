@@ -92,6 +92,13 @@
                 (setf (slot-value chars 'loyalty)   loyalty)
                 (setf (slot-value c 'characteristics) chars)
                 (setf (slot-value c 'status) stats)
+                (setf (slot-value c 'artist) artist)
+                (setf (slot-value c 'flavor) flavor)
+                (setf (slot-value c 'rarity) rarity)
+                (when tap-abilities nil)
+                (when activated-abilities nil)
+                (when abilities nil)
+                (when triggered-abilities nil)
 	        c)))
 
 (defun copy-card (card)
@@ -174,7 +181,7 @@
 (defun has-static-ability? (card ability)
         (member ability (get-card-abilities card)))
 
-(defmethod print-card (card)
+(defun print-card (card)
         (format t "~a" (get-card-name card))
         (when (tapped? card) (format t " - T"))
 	(when (sick?   card) (format t " - S"))

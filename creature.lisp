@@ -10,16 +10,16 @@
 (defun deathtouch!   (creat) (setf (slot-value (slot-value creat 'creature-dat) 'deathtouched) t))
 
 (defun set-damage! (creature dmg)
-        (setf (damage (creature-data creature)) dmg))
+        (setf (slot-value (slot-value creature 'creature-data) 'damage) dmg))
 
 (defun do-damage! (creature dmg)
-        (setf (damage (creature-data creature)) (- (damage (creature-data creature)) dmg)))
+        (setf (slot-value (slot-value creature 'creature-data) 'damage) (- (slot-value (slot-value creature 'creature-data) 'damage) dmg)))
 
 (defun heal! (creature)
-        (setf (damage (creature-data creature)) 0))
+        (setf (slot-value (slot-value creature 'creature-data) 'damage) 0))
 
 (defun hp (creature)
-        (- (toughness (characteristics creature)) (damage (creature-data creature))))
+        (- (slot-value (slot-value creature 'characteristics) 'toughness) (slot-value (slot-value creature 'creature-data) 'damage)))
 
 (defparameter *creature-types* '(Advisor Ally Angel Antelope Ape Archer Archon Artificer Assassin Assembly-Worker Atog Aurochs Avatar
                                  Badger Barbarian Basilisk Bat Bear Beast Beeble Berserker Bird Blinkmoth Boar Bringer Brushwagg
