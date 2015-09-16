@@ -35,16 +35,16 @@
                 (when *use-colors* (color 'white))))
 
 (defun color (col)
-        (cond 
-                ((eq col 'white)  (format t "~c[0m"  #\Esc))
-                ((eq col 'black)  (format t "~c[30m" #\Esc))
-                ((eq col 'black)  (format t "~c[30m" #\Esc))
-                ((eq col 'red)    (format t "~c[31m" #\Esc))
-                ((eq col 'green)  (format t "~c[32m" #\Esc))
-                ((eq col 'yellow) (format t "~c[33m" #\Esc))
-                ((eq col 'blue)   (format t "~c[34m" #\Esc))
-                ((eq col 'purple) (format t "~c[35m" #\Esc))
-                ((eq col 'cyan)   (format t "~c[36m" #\Esc))))
+        (case col
+                (white  (format t "~c[0m"  #\Esc))
+                (black  (format t "~c[30m" #\Esc))
+                (black  (format t "~c[30m" #\Esc))
+                (red    (format t "~c[31m" #\Esc))
+                (green  (format t "~c[32m" #\Esc))
+                (yellow (format t "~c[33m" #\Esc))
+                (blue   (format t "~c[34m" #\Esc))
+                (purple (format t "~c[35m" #\Esc))
+                (cyan   (format t "~c[36m" #\Esc))))
 
 (defun string-trim-first-n (str n)
         (subseq str n (length str)))

@@ -7,50 +7,50 @@
 (defun list-life        (player) (format t "~a~%" (get-player-life player)))
 
 (defun list-commands ()
-        (format t "commands available:~%")
-        (format t "p                    - pass priority~%")
-        (format t "h                    - list cards in hand~%")
-        (format t "b                    - list cards on battlefield~%")
-        (format t "g                    - list cards in graveyard~%")
-        (format t "e                    - list cards in exile zone~%")
-        (format t "fm                   - free mana~%")
-        (format t "mp                   - see mana pool~%")
-        (format t "desc [card]          - describe text on card~%")
-        (format t "cast [card]          - cast a card~%")
-        (format t "play [land]          - play a land~%")
-        (format t "tap [bnum]           - tap a land for mana")
-        (format t "untap [bnum]         - untap a land for mana")
-        (format t "activate [ability]   - activate an ability~%")
-        (format t "faceup [permanent]   - turn a permanent faceup~%")
-        (format t "concede              - concede the game~%"))
+        (format t "commands available:                             ~%~
+                   p                    - pass priority            ~%~
+                   h                    - list cards in hand       ~%~
+                   b                    - list cards on battlefield~%~
+                   g                    - list cards in graveyard  ~%~
+                   e                    - list cards in exile zone ~%~
+                   fm                   - free mana                ~%~
+                   mp                   - see mana pool            ~%~
+                   desc                 - describe text on card    ~%~
+                   cast                 - cast a card              ~%~
+                   play                 - play a land              ~%~
+                   tap                  - tap a land for mana      ~%~
+                   untap                - untap a land for mana    ~%~
+                   activate [ability]   - activate an ability      ~%~
+                   faceup [permanent]   - turn a permanent faceup  ~%~
+                   concede              - concede the game         ~%"))
 
 (defun list-attackers-commands()
-        (format t "commands available:~%")
-        (format t "commit               - commit to chosen attackers~%")
-        (format t "h                    - list cards in hand~%")
-        (format t "b                    - list cards on battlefield~%")
-        (format t "g                    - list cards in graveyard~%")
-        (format t "e                    - list cards in exile zone~%")
-        (format t "fm                   - free mana~%")
-        (format t "mp                   - see mana pool~%")
-        (format t "attack [bnum]        - attack opponent with a creature~%")
-        (format t "unattack [bnum]      - don't attack opponent with a creature~%")
-        (format t "la                   - list attackers~%")
-        (format t "concede              - concede the game~%"))
+        (format t "commands available:                                          ~%~
+                   commit               - commit to chosen attackers            ~%~
+                   h                    - list cards in hand                    ~%~
+                   b                    - list cards on battlefield             ~%~
+                   g                    - list cards in graveyard               ~%~
+                   e                    - list cards in exile zone              ~%~
+                   fm                   - free mana                             ~%~
+                   mp                   - see mana pool                         ~%~
+                   attack               - attack opponent with a creature       ~%~
+                   unattack             - don't attack opponent with a creature ~%~
+                   la                   - list attackers                        ~%~
+                   concede              - concede the game                      ~%"))
 
 (defun list-blockers-commands ()
-        (format t "commands available:~%")
-        (format t "commit               - commit to chosen blockers~%")
-        (format t "h                    - list cards in hand~%")
-        (format t "b                    - list cards on battlefield~%")
-        (format t "g                    - list cards in graveyard~%")
-        (format t "e                    - list cards in exile zone~%")
-        (format t "fm                   - free mana~%")
-        (format t "mp                   - see mana pool~%")
-        (format t "block [bnum]         - block opponent with a creature~%")
-        (format t "unblock [bnum]       - don't block opponent with a creature~%")
-        (format t "la                   - list attackers~%")
-        (format t "concede              - concede the game~%"))
+        (format t "commands available:                                          ~%~
+                   commit               - commit to chosen blockers             ~%~
+                   h                    - list cards in hand                    ~%~
+                   b                    - list cards on battlefield             ~%~
+                   g                    - list cards in graveyard               ~%~
+                   e                    - list cards in exile zone              ~%~
+                   fm                   - free mana                             ~%~
+                   mp                   - see mana pool                         ~%~
+                   block                - block opponent with a creature        ~%~
+                   unblock              - don't block opponent with a creature  ~%~
+                   la                   - list attackers                        ~%~
+                   concede              - concede the game                      ~%"))
 
 (defun free-mana (player num)  (set-player-manapool player (+ num (get-player-manapool player)))) 
 (defun pay-mana  (player cost) (set-player-manapool player (-     (get-player-manapool player) cost)))
