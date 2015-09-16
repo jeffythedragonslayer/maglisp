@@ -8,5 +8,5 @@
 (defun get-planeswalker-loyalty (x)
         (slot-value (slot-value x 'planeswalker-dat) 'loyalty))
 
-(defun set-planeswalker-loyalty (x loy)
+(defun set-planeswalker-loyalty! (x loy)
         (setf (slot-value (slot-value x 'planeswalker-dat) 'loyalty) loy))

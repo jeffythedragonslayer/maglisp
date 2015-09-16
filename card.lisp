@@ -38,8 +38,8 @@
 
 (defun get-card-owner           (card) (slot-value card 'owner))
 (defun get-card-controller      (card) (slot-value card 'controller)) 
-(defun set-card-owner           (card owner)      (setf (slot-value card 'owner)      owner))
-(defun set-card-controller      (card controller) (setf (slot-value card 'controller) controller))
+(defun set-card-owner!          (card owner)      (setf (slot-value card 'owner)      owner))
+(defun set-card-controller!     (card controller) (setf (slot-value card 'controller) controller))
 (defun get-card-name            (card) (slot-value (slot-value card 'characteristics) 'name))
 (defun get-card-cmc             (card) (slot-value (slot-value card 'characteristics) 'cmc))
 (defun get-card-colors          (card) (slot-value (slot-value card 'characteristics) 'colors))

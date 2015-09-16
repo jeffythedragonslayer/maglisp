@@ -1,8 +1,6 @@
 (setf *all-cards* (append (build-singleton-deck *price-of-glory*)
                           (build-singleton-deck *infernal-intervention*)))
 
-(defparameter *skip-priority-steps* '(upkeep draw beginning-of-combat declare-attackers declare-blockers combat-damage end-of-combat end))
-
 (defparameter *bob*   (make-instance 'player :name "Bob"   :library (build-deck *price-of-glory*)))
 (defparameter *alice* (make-instance 'player :name "Alice" :library (build-deck *infernal-intervention*)))
 (setf *all-players* (list *bob* *alice*))
@@ -12,17 +10,19 @@
 
 (defun owndeck! (player)
         (mapcar (lambda (x)
-                        (set-card-owner      x player)
-                        (set-card-controller x player))
+                        (set-card-owner!      x player)
+                        (set-card-controller! x player))
                 (slot-value player 'library)))
  
 (defun main ()
-        (shuffle *bob*)
-        (shuffle *alice*)
+        (shuffle! *bob*)
+        (shuffle! *alice*)
         (owndeck! *bob*)
         (owndeck! *alice*)
-        (drawn *bob*   20)
-        (drawn *alice* 20)
+        (change-zones! (find-card-by-name "Soulmender"     (library *bob*)) (library *bob*) *battlefield*)
+        (change-zones! (find-card-by-name "Child of Night" (library *bob*)) (library *bob*) *battlefield*)
+        (drawn! *bob*   20)
+        (drawn! *alice* 20)
         (loop until *game-over* do
               (turn *bob*)
               (turn *alice*))

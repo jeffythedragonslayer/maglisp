@@ -38,7 +38,6 @@
         (case col
                 (white  (format t "~c[0m"  #\Esc))
                 (black  (format t "~c[30m" #\Esc))
-                (black  (format t "~c[30m" #\Esc))
                 (red    (format t "~c[31m" #\Esc))
                 (green  (format t "~c[32m" #\Esc))
                 (yellow (format t "~c[33m" #\Esc))
