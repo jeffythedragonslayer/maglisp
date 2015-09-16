@@ -1,5 +1,7 @@
 (setf *all-cards* (append (build-singleton-deck *price-of-glory*)
-                                  (build-singleton-deck *infernal-intervention*)))
+                          (build-singleton-deck *infernal-intervention*)))
+
+(defparameter *skip-priority-steps* '(upkeep draw beginning-of-combat declare-attackers declare-blockers combat-damage end-of-combat end))
 
 (defparameter *bob*   (make-instance 'player :name "Bob"   :library (build-deck *price-of-glory*)))
 (defparameter *alice* (make-instance 'player :name "Alice" :library (build-deck *infernal-intervention*)))

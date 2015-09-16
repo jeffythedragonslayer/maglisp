@@ -21,7 +21,8 @@
         (setf *current-step* 'upkeep)
         (with-color 'yellow (format t "Upkeep Step~%"))
         ;(triggers)
-        (get-priority-loop)
+        (unless (member 'upkeep *skip-priority-steps*)
+                (get-priority-loop))
         (empty-manapools))
 
 (defun draw-step ()
@@ -29,7 +30,8 @@
         (with-color 'yellow (format t "Draw Step~%"))
         (draw *active-player*) 
         ;(triggers)
-        (get-priority-loop)
+        (unless (member 'draw *skip-priority-steps*)
+                (get-priority-loop))
         (empty-manapools))
 
 (defun beginning-phase ()
@@ -43,7 +45,8 @@
 (defun main-phase (which)
         (setf *current-phase* 'main)
         (with-color 'green (format t "--- Main Phase ~a ---~%" which))
-	(get-priority-loop)
+	(unless (member 'main *skip-priority-steps*)
+                (get-priority-loop))
         (empty-manapools))
 
 (defun beginning-of-combat-step () 
@@ -52,7 +55,8 @@
         ;507.1. First, if the game being played is a multiplayer game in which the active player’s opponents don’t all automatically become defending players,
         ;       the active player chooses one of his or her opponents. That player becomes the defending player. This turn-based action doesn’t use the stack. (See rule 506.2.)
         ;507.2. Second, any abilities that trigger at the beginning of combat go on the stack. (See rule 603, “Handling Triggered Abilities.”)
-        (get-priority-loop) ;507.3
+        (unless (member 'beginning-of-combat *skip-priority-steps*)
+                (get-priority-loop)) ;507.3
         (empty-manapools))
 
 (defun declare-attackers-step () 
@@ -60,28 +64,32 @@
         (with-color 'yellow (format t "Declare Attackers Step~%"))
         (prompt-attackers *active-player*)
         (mapcar (lambda (x) (unless (has-static-ability? x 'vigilance)) #'tap!) *attackers*)
-        (get-priority-loop)
+        (unless (member 'declare-attackers *skip-priority-steps*)
+                (get-priority-loop))
         (empty-manapools))
 
 (defun declare-blockers-step ()
         (setf *current-step*'declare-blockers)
         (with-color 'yellow (format t "Declare Blockers Step~%"))
-        (mapcar (lambda (x) (prompt-blockers x)) *nonactive-players*)
-        (get-priority-loop)
+        (mapcar (lambda (x) (prompt-blockers x)) *nonactive-players*) 
+        (unless (member 'declare-blockers *skip-priority-steps*)
+                (get-priority-loop))
         (empty-manapools))
 
 (defun combat-damage-step () 
         (setf *current-step* 'combat-damage)
         (with-color 'yellow (format t "Combat Damage Step~%"))
-        (mapcar #'deal-damage *nonactive-players*)
-        (get-priority-loop)
+        (mapcar #'deal-damage *nonactive-players*) 
+        (unless (member 'combat-damage *skip-priority-steps*)
+                (get-priority-loop))
         (empty-manapools))
 
 (defun end-of-combat-step ()
         (setf *current-step* 'end-of-combat)
         (with-color 'yellow (format t "End of Combat Step~%"))
         ; 511.1 First, all “at end of combat” abilities trigger and go on the stack. (See rule 603, “Handling Triggered Abilities.”) 
-        (get-priority-loop) ;511.2
+        (unless (member 'end-of-combat *skip-priority-steps*)
+                (get-priority-loop)) ;511.2
         ; 511.3 As soon as the end of combat step ends, all creatures and planeswalkers are removed from combat.
         ;       After the end of combat step ends, the combat phase is over and the postcombat main phase begins (see rule 505).
         (empty-manapools))
@@ -100,8 +108,9 @@
 
 (defun end-step ()
         (setf *current-step* 'end)
-        (with-color 'yellow (format t "End Step~%"))
-	(get-priority-loop)
+        (with-color 'yellow (format t "End Step~%")) 
+        (unless (member 'end *skip-priority-steps*)
+                (get-priority-loop))
         (empty-manapools))
 
 (defun heal-all-permanents ()
