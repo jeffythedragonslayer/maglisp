@@ -8,12 +8,19 @@
 (setf *apnap-circle* (copy-list *all-players*))
 (circular! *apnap-circle*)
 
-
+(defun owndeck! (player)
+        (mapcar (lambda (x)
+                        (set-card-owner      x player)
+                        (set-card-controller x player))
+                (slot-value player 'library)))
+ 
 (defun main ()
         (shuffle *bob*)
         (shuffle *alice*)
-        (drawn *bob*   7)
-        (drawn *alice* 7)
+        (owndeck! *bob*)
+        (owndeck! *alice*)
+        (drawn *bob*   20)
+        (drawn *alice* 20)
         (loop until *game-over* do
               (turn *bob*)
               (turn *alice*))

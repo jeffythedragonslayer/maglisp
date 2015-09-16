@@ -54,3 +54,17 @@
                 (if (>= (length str) l)
                     (equal beg (subseq str 0 (length beg)))
                     nil)))
+
+(defun read-int (low high)
+        (when (< high low) (error "high < low"))
+        (handler-case
+                (let1 num (parse-integer (read-line))
+                        (if (or (< num low)
+                                (> num high))
+                            (progn
+                                (beep-format t "enter an integer between ~a and ~a: " low high)
+                                (read-int low high))
+                            num))
+        (condition ()
+                (beep-format t "enter an integer: " low high)
+                (read-int low high))))

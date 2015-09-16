@@ -1,0 +1,5 @@
+(defun print-card (card)
+        (format t "~a" (get-card-name card))
+        (when (tapped? card) (format t " - T"))
+	(when (sick?   card) (format t " - S"))
+        (format t "~%"))

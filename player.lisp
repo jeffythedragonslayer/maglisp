@@ -7,7 +7,7 @@
          (playedland                 :initform nil)
          (emptydraw                  :initform nil)
          (manapool                   :initform 0)))
- 
+
 (defun get-player-name       (player) (slot-value player 'name))
 (defun get-player-life       (player) (slot-value player 'life))
 (defun get-player-library    (player) (slot-value player 'library))
